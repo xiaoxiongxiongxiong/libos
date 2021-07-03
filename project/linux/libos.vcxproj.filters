@@ -9,16 +9,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\libmutex.c">
+    <ClCompile Include="..\..\src\mutex.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libos.c">
+    <ClCompile Include="..\..\src\log.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libqueue.c">
+    <ClCompile Include="..\..\src\queue.c">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\liblist.c">
+    <ClCompile Include="..\..\src\dlist.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,22 +1,22 @@
-#include "libos.h"
+ï»¿#include "libos.h"
 #include <malloc.h>
 #include <string.h>
 #include <errno.h>
 
 struct _os_dlist_node_t
 {
-    os_dlist_node_t * next;  // ÏÂÒ»¸ö½Úµã
-    os_dlist_node_t * prev;  // ÉÏÒ»¸ö½Úµã
-    char data[0];            // Êý¾Ý
+    os_dlist_node_t * next;  // ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
+    os_dlist_node_t * prev;  // ä¸Šä¸€ä¸ªèŠ‚ç‚¹
+    char data[0];            // æ•°æ®
 };
 
 struct _os_dlist_t
 {
-    size_t size;             // Á´±í³¤¶È
-    size_t node_size;        // ½ÚµãÊý¾Ý´óÐ¡
-    os_dlist_node_t * head;  // Í·½Úµã
-    os_dlist_node_t * tail;  // Î²½Úµã
-    os_mutex_t * mtx;        // »¥³âËø
+    size_t size;             // é“¾è¡¨é•¿åº¦
+    size_t node_size;        // èŠ‚ç‚¹æ•°æ®å¤§å°
+    os_dlist_node_t * head;  // å¤´èŠ‚ç‚¹
+    os_dlist_node_t * tail;  // å°¾èŠ‚ç‚¹
+    os_mutex_t * mtx;        // äº’æ–¥é”
 };
 
 os_dlist_t * os_dlist_create(const size_t node_size)
@@ -50,6 +50,18 @@ void os_dlist_destroy(os_dlist_t ** os_lst)
         log_msg_warn("Input param is nullptr!");
         return;
     }
+
+    if (!os_dlist_empty(*os_lst))
+        os_dlist_clear(*os_lst);
+
+    if (NULL != (*os_lst)->mtx)
+    {
+        os_mutex_destroy(&(*os_lst)->mtx);
+        (*os_lst)->mtx = NULL;
+    }
+
+    free(*os_lst);
+    *os_lst = NULL;
 }
 
 void os_dlist_clear(os_dlist_t * os_lst)
@@ -82,7 +94,7 @@ bool os_dlist_empty(const os_dlist_t * os_lst)
 
     bool is_empty = false;
     os_mutex_lock(os_lst->mtx);
-    is_empty = (os_lst->size == 0);
+    is_empty = (0 == os_lst->size);
     os_mutex_unlock(os_lst->mtx);
 
     return is_empty;
@@ -176,7 +188,7 @@ os_dlist_node_t * os_dlist_head(const os_dlist_t * os_lst)
     if (NULL == os_lst)
     {
         log_msg_warn("Input param is nullptr!");
-        return false;
+        return NULL;
     }
 
     os_dlist_node_t * head = NULL;
@@ -192,7 +204,7 @@ os_dlist_node_t * os_dlist_tail(const os_dlist_t * os_lst)
     if (NULL == os_lst)
     {
         log_msg_warn("Input param is nullptr!");
-        return false;
+        return NULL;
     }
 
     os_dlist_node_t * tail = NULL;
@@ -208,7 +220,7 @@ os_dlist_node_t * os_dlist_next(const os_dlist_node_t * os_node)
     if (NULL == os_node)
     {
         log_msg_warn("Input param is nullptr!");
-        return false;
+        return NULL;
     }
 
     return os_node->next;
@@ -219,7 +231,7 @@ os_dlist_node_t * os_dlist_prev(const os_dlist_node_t * os_node)
     if (NULL == os_node)
     {
         log_msg_warn("Input param is nullptr!");
-        return false;
+        return NULL;
     }
 
     return os_node->prev;
@@ -230,8 +242,8 @@ void * os_dlist_getdata(const os_dlist_node_t * node)
     if (NULL == node)
     {
         log_msg_warn("Input param is nullptr!");
-        return false;
+        return NULL;
     }
 
-    return (void*)node->data;
+    return (void *)node->data;
 }

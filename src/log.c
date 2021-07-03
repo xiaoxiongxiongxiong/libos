@@ -1,4 +1,4 @@
-#include "libos.h"
+ï»¿#include "libos.h"
 #include <stdlib.h>
 #include <assert.h>
 #include <stdarg.h>
@@ -15,34 +15,34 @@
 #include <io.h>
 #endif
 
-#define OS_LOG_DATE_MAX_LEN 64       // ÈÕÖ¾Ê±¼ä³¤¶È 
-#define OS_LOG_FILE_MAX_LEN 256      // ÎÄ¼şÃû×î´ó³¤¶ÈÎª255
-#define OS_LOG_MSG_MAX_BUFF 3072     // ÈÕÖ¾ĞÅÏ¢×î´ó³¤¶È
-#define OS_LOG_LINE_MAX_LEN 4096     // ÈÕÖ¾Ã¿ĞĞ´òÓ¡µÄ×î´ó×Ö½ÚÊı
+#define OS_LOG_DATE_MAX_LEN 64       // æ—¥å¿—æ—¶é—´é•¿åº¦ 
+#define OS_LOG_FILE_MAX_LEN 256      // æ–‡ä»¶åæœ€å¤§é•¿åº¦ä¸º255
+#define OS_LOG_MSG_MAX_BUFF 3072     // æ—¥å¿—ä¿¡æ¯æœ€å¤§é•¿åº¦
+#define OS_LOG_LINE_MAX_LEN 4096     // æ—¥å¿—æ¯è¡Œæ‰“å°çš„æœ€å¤§å­—èŠ‚æ•°
 
 typedef struct _os_log_t
 {
-    int line;                        // ÈÕÖ¾ËùÔÚĞĞÊı
-    long thr_id;                     // Ïß³Ìid
-    LOG_MSG_LEVEL level;             // ÈÕÖ¾¼¶±ğ
-    char date[OS_LOG_DATE_MAX_LEN];  // ´òÓ¡ÈÕÖ¾Ê±¼ä
-    char file[OS_LOG_FILE_MAX_LEN];  // ÈÕÖ¾ÏûÏ¢ËùÔÚÎÄ¼ş
-    char func[OS_LOG_FILE_MAX_LEN];  // ÈÕÖ¾ÏûÏ¢ËùÔÚº¯Êı
-    char msg[OS_LOG_MSG_MAX_BUFF];   // ÈÕÖ¾ÏûÏ¢
+    int line;                        // æ—¥å¿—æ‰€åœ¨è¡Œæ•°
+    long thr_id;                     // çº¿ç¨‹id
+    LOG_MSG_LEVEL level;             // æ—¥å¿—çº§åˆ«
+    char date[OS_LOG_DATE_MAX_LEN];  // æ‰“å°æ—¥å¿—æ—¶é—´
+    char file[OS_LOG_FILE_MAX_LEN];  // æ—¥å¿—æ¶ˆæ¯æ‰€åœ¨æ–‡ä»¶
+    char func[OS_LOG_FILE_MAX_LEN];  // æ—¥å¿—æ¶ˆæ¯æ‰€åœ¨å‡½æ•°
+    char msg[OS_LOG_MSG_MAX_BUFF];   // æ—¥å¿—æ¶ˆæ¯
 } os_log_t;
 
-// ÊÇ·ñÒÑ¾­³õÊ¼»¯
+// æ˜¯å¦å·²ç»åˆå§‹åŒ–
 static bool g_is_init = false;
-// Ğ´ÈëÎÄ¼şµÄÈÕÖ¾¼¶±ğ
+// å†™å…¥æ–‡ä»¶çš„æ—¥å¿—çº§åˆ«
 static LOG_MSG_LEVEL g_log_level = LOG_LEVEL_INFO;
-// ÎÄ¼ş¾ä±ú
+// æ–‡ä»¶å¥æŸ„
 static FILE * g_log_fp = NULL;
-// ÎÄ¼şÂ·¾¶
+// æ–‡ä»¶è·¯å¾„
 static char g_log_path[OS_PATH_MAX_LEN] = { 0 };
-// ÈÕÖ¾¼¶±ğ×Ö·û´®
+// æ—¥å¿—çº§åˆ«å­—ç¬¦ä¸²
 static const char * g_log_str[] = { "INFO", "WARN", "ERROR", "FATAL" };
 
-// ´¦ÀíÈÕÖ¾º¯Êı
+// å¤„ç†æ—¥å¿—å‡½æ•°
 static int log_msg_doit(LOG_MSG_LEVEL level, const char * file, const int line, const char * func, const char * fmt, va_list vl);
 
 bool log_msg_init(const char * file, const LOG_MSG_LEVEL level)
@@ -54,7 +54,7 @@ bool log_msg_init(const char * file, const LOG_MSG_LEVEL level)
     }
 
     assert(level <= LOG_LEVEL_FATAL && level >= LOG_LEVEL_INFO);
-    
+
     if (level<LOG_LEVEL_INFO || level>LOG_LEVEL_FATAL)
     {
         fputs("log level is out of range!\n", stderr);
@@ -66,7 +66,7 @@ bool log_msg_init(const char * file, const LOG_MSG_LEVEL level)
     if (file)
     {
         strncpy(g_log_path, file, OS_PATH_MAX_LEN - 1);
-        // TODO »ñÈ¡¾ø¶ÔÂ·¾¶
+        // TODO è·å–ç»å¯¹è·¯å¾„
         g_log_fp = fopen(g_log_path, "a+");
         if (NULL == g_log_fp)
         {
@@ -117,7 +117,7 @@ int log_msg_doit(LOG_MSG_LEVEL level, const char * file, const int line, const c
     GetLocalTime(&sys_tv);
 #endif
 
-    // ¼¶±ğĞŞÕı
+    // çº§åˆ«ä¿®æ­£
     if (level >= LOG_LEVEL_INFO && level <= LOG_LEVEL_FATAL)
         node.level = level;
     else
@@ -131,13 +131,13 @@ int log_msg_doit(LOG_MSG_LEVEL level, const char * file, const int line, const c
         strncpy(node.file, file_name, OS_LOG_FILE_MAX_LEN);
     }
     snprintf(node.date, OS_LOG_DATE_MAX_LEN, "%04d/%02d/%02d %02d:%02d:%02d.%03d", sys_tv->tm_year + 1900, sys_tv->tm_mon + 1,
-        sys_tv->tm_mday, sys_tv->tm_hour, sys_tv->tm_min, sys_tv->tm_sec, tv.tv_usec / 1000);
+             sys_tv->tm_mday, sys_tv->tm_hour, sys_tv->tm_min, sys_tv->tm_sec, tv.tv_usec / 1000);
     node.thr_id = syscall(SYS_gettid);
 #else
-    // ´òÓ¡ÈÕÖ¾Ê±¼ä
+    // æ‰“å°æ—¥å¿—æ—¶é—´
     snprintf(node.date, OS_LOG_DATE_MAX_LEN, "%04d/%02d/%02d %02d:%02d:%02d.%03d",
-        sys_tv.wYear, sys_tv.wMonth, sys_tv.wDay, sys_tv.wHour,
-        sys_tv.wMinute, sys_tv.wSecond, sys_tv.wMilliseconds);
+             sys_tv.wYear, sys_tv.wMonth, sys_tv.wDay, sys_tv.wHour,
+             sys_tv.wMinute, sys_tv.wSecond, sys_tv.wMilliseconds);
     node.thr_id = (long)GetCurrentThreadId();
     if (file)
     {
@@ -148,16 +148,16 @@ int log_msg_doit(LOG_MSG_LEVEL level, const char * file, const int line, const c
     }
 #endif
 
-    // ËùÔÚº¯Êı
+    // æ‰€åœ¨å‡½æ•°
     if (func)
         strncpy(node.func, func, OS_LOG_FILE_MAX_LEN - 1);
 
-    // ¸ñÊ½»¯ÈÕÖ¾
+    // æ ¼å¼åŒ–æ—¥å¿—
     int len = vsnprintf(node.msg, sizeof(node.msg), fmt, vl);
     char log_buf[OS_LOG_LINE_MAX_LEN] = { 0 };
     snprintf(log_buf, OS_LOG_LINE_MAX_LEN, "[%s][%s][%ld][%s:%d][%s] %s\n",
-        node.date, g_log_str[node.level], node.thr_id, node.file,
-        node.line, node.func, node.msg);
+             node.date, g_log_str[node.level], node.thr_id, node.file,
+             node.line, node.func, node.msg);
 
     fflush(stdout);
     fputs(log_buf, stderr);
@@ -183,10 +183,10 @@ int log_msg_doit(LOG_MSG_LEVEL level, const char * file, const int line, const c
         }
     }
 
-    // ¸ù¾İ¼¶±ğÅĞ¶¨ÊÇ·ñÍË³ö
+    // æ ¹æ®çº§åˆ«åˆ¤å®šæ˜¯å¦é€€å‡º
     if (level == LOG_LEVEL_FATAL)
     {
-        log_msg_uninit();  //ÈÕÖ¾·´³õÊ¼»¯²¢É±µôµ±Ç°½ø³Ì
+        log_msg_uninit();  //æ—¥å¿—ååˆå§‹åŒ–å¹¶æ€æ‰å½“å‰è¿›ç¨‹
         exit(EXIT_FAILURE);
     }
     return len;

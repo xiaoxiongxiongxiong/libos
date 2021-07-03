@@ -1,4 +1,4 @@
-#include "libos.h"
+ï»¿#include "libos.h"
 #include <stdint.h>
 #include <string.h>
 #include <malloc.h>
@@ -6,16 +6,16 @@
 
 struct _os_queue_node_t
 {
-    os_queue_node_t * next;  // ÏÂÒ»¸ö½Úµã
-    char data[0];            // ½ÚµãÄÚÈÝ
+    os_queue_node_t * next;  // ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
+    char data[0];            // èŠ‚ç‚¹å†…å®¹
 };
 
 struct _os_queue_t
 {
-    size_t size;              // ¶ÓÁÐ³¤¶È
-    uint32_t node_size;       // ½ÚµãÊý¾Ý´óÐ¡
-    os_queue_node_t * head;   // ¶ÓÁÐÍ·
-    os_queue_node_t * tail;   // ¶ÓÁÐÎ²
+    size_t size;              // é˜Ÿåˆ—é•¿åº¦
+    uint32_t node_size;       // èŠ‚ç‚¹æ•°æ®å¤§å°
+    os_queue_node_t * head;   // é˜Ÿåˆ—å¤´
+    os_queue_node_t * tail;   // é˜Ÿåˆ—å°¾
     os_mutex_t * mtx;
 };
 
@@ -50,7 +50,7 @@ void os_queue_destroy(os_queue_t ** os_queue)
         return;
     }
 
-    // ²»Îª¿ÕÔòÇå¿Õ
+    // ä¸ä¸ºç©ºåˆ™æ¸…ç©º
     if (!os_queue_empty(*os_queue))
     {
         os_queue_clear(*os_queue);
@@ -131,7 +131,7 @@ bool os_queue_push(os_queue_t * os_queue, void * data)
     memcpy(os_node->data, data, os_queue->node_size);
     os_node->next = NULL;
     os_mutex_lock(os_queue->mtx);
-    if (0 == os_queue->size) // ¶ÓÁÐÎª¿Õ
+    if (0 == os_queue->size) // é˜Ÿåˆ—ä¸ºç©º
     {
         os_queue->head = os_node;
         os_queue->tail = os_node;
@@ -155,7 +155,7 @@ bool os_queue_pop(os_queue_t * os_queue)
         return false;
     }
 
-    // ¶ÓÁÐÒÑÎª¿Õ
+    // é˜Ÿåˆ—å·²ä¸ºç©º
     os_mutex_lock(os_queue->mtx);
     if (0 == os_queue->size)
     {

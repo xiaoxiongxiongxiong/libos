@@ -1,4 +1,4 @@
-#ifndef __LIBOS_H__
+ï»¿#ifndef __LIBOS_H__
 #define __LIBOS_H__
 
 #include <stdio.h>
@@ -6,17 +6,17 @@
 #include <stdint.h>
 
 #ifdef __linux__
-#define OS_PATH_MAX_LEN 4096 // Â·¾¶×î´ó³¤¶È
+#define OS_PATH_MAX_LEN 4096 // è·¯å¾„æœ€å¤§é•¿åº¦
 #else
-#define OS_PATH_MAX_LEN 260  // Â·¾¶×î´ó³¤¶È
+#define OS_PATH_MAX_LEN 260  // è·¯å¾„æœ€å¤§é•¿åº¦
 #endif
 
-typedef enum _LOG_MSG_LEVEL  // ÈÕÖ¾¼¶±ğ
+typedef enum _LOG_MSG_LEVEL  // æ—¥å¿—çº§åˆ«
 {
-    LOG_LEVEL_INFO = 0,      // ÆÕÍ¨´òÓ¡
-    LOG_LEVEL_WARN,          // ¾¯¸æ£¬³ÌĞò¿ÉÒÔ¼ÌĞøÔËĞĞ
-    LOG_LEVEL_ERROR,         // ´íÎó£¬ÏµÍ³º¯Êı´íÎó
-    LOG_LEVEL_FATAL          // ³ÌĞòÎŞ·¨¼ÌĞøÔËĞĞÖ±½ÓÍË³ö
+    LOG_LEVEL_INFO = 0,      // æ™®é€šæ‰“å°
+    LOG_LEVEL_WARN,          // è­¦å‘Šï¼Œç¨‹åºå¯ä»¥ç»§ç»­è¿è¡Œ
+    LOG_LEVEL_ERROR,         // é”™è¯¯ï¼Œç³»ç»Ÿå‡½æ•°é”™è¯¯
+    LOG_LEVEL_FATAL          // ç¨‹åºæ— æ³•ç»§ç»­è¿è¡Œç›´æ¥é€€å‡º
 } LOG_MSG_LEVEL;
 
 typedef struct _os_mutex_t os_mutex_t;
@@ -25,237 +25,247 @@ typedef struct _os_dlist_t os_dlist_t;
 typedef struct _os_queue_node_t os_queue_node_t;
 typedef struct _os_queue_t os_queue_t;
 
-#ifndef __linux__
+#ifdef __cplusplus
+#define OS_API_BEGIN extern "C" {
+#define OS_API_END }
+#if defined(WIN32) || defined(_WIN32)
+#if defined(OS_API_EXPORT)
 #define OS_API __declspec(dllexport)
+#else
+#define OS_API __declspec(dllimport)
+#endif
 #else
 #define OS_API
 #endif
-
-#ifdef __cplusplus
-extern "C"{
+#else
+#define OS_API_BEGIN
+#define OS_API_END
+#define OS_API
 #endif
+
+OS_API_BEGIN
 
 /*
 * os_mutex_create
-* @brief  ´´½¨Ëø
-* @return ËøÖ¸Õë»òÕßNULL
+* @brief  åˆ›å»ºé”
+* @return é”æŒ‡é’ˆæˆ–è€…NULL
 */
 OS_API os_mutex_t * os_mutex_create();
 
 /*
 * os_mutex_destroy
-* @brief  Ïú»ÙËø
-* @param  mtx Ö¸ÏòËøÖ¸ÕëµÄÖ¸Õë
+* @brief  é”€æ¯é”
+* @param  mtx æŒ‡å‘é”æŒ‡é’ˆçš„æŒ‡é’ˆ
 */
 OS_API void os_mutex_destroy(os_mutex_t ** mtx);
 
 /*
 * os_mutex_lock
-* @brief  ÉÏËø
-* @param  mtx  ËøÖ¸Õë
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  ä¸Šé”
+* @param  mtx  é”æŒ‡é’ˆ
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
 OS_API bool os_mutex_lock(os_mutex_t * mtx);
 
 /*
 * os_mutex_unlock
-* @brief  ½âËø
-* @param  mtx  ËøÖ¸Õë
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  è§£é”
+* @param  mtx  é”æŒ‡é’ˆ
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
 OS_API bool os_mutex_unlock(os_mutex_t * mtx);
 
 /*
 * os_dlist_create
-* @brief  ´´½¨Á´±í
-* @param  node_size  ½Úµã´óĞ¡
-* @return Á´±íÖ¸Õë»òÕßÎªNULL
+* @brief  åˆ›å»ºé“¾è¡¨
+* @param  node_size  èŠ‚ç‚¹å¤§å°
+* @return é“¾è¡¨æŒ‡é’ˆæˆ–è€…ä¸ºNULL
 */
 OS_API os_dlist_t * os_dlist_create(const size_t node_size);
 
 /*
 * os_dlist_destroy
-* @brief  Ïú»ÙÁ´±í
-* @param  os_lst  Ö¸ÏòÁ´±íÖ¸ÕëµÄÖ¸Õë
+* @brief  é”€æ¯é“¾è¡¨
+* @param  os_lst  æŒ‡å‘é“¾è¡¨æŒ‡é’ˆçš„æŒ‡é’ˆ
 */
-void os_dlist_destroy(os_dlist_t ** os_lst);
+OS_API void os_dlist_destroy(os_dlist_t ** os_lst);
 
 /*
 * os_dlist_clear
-* @brief  Çå¿ÕÁ´±í
-* @param  os_lst  Á´±íÖ¸Õë
+* @brief  æ¸…ç©ºé“¾è¡¨
+* @param  os_lst  é“¾è¡¨æŒ‡é’ˆ
 */
-void os_dlist_clear(os_dlist_t * os_lst);
+OS_API void os_dlist_clear(os_dlist_t * os_lst);
 
 /*
 * os_dlist_empty
-* @brief  ÅĞ¶ÏÁ´±íÊÇ·ñÎª¿Õ
-* @param  os_lst  Á´±íÖ¸Õë
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  åˆ¤æ–­é“¾è¡¨æ˜¯å¦ä¸ºç©º
+* @param  os_lst  é“¾è¡¨æŒ‡é’ˆ
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
-bool os_dlist_empty(const os_dlist_t * os_lst);
+OS_API bool os_dlist_empty(const os_dlist_t * os_lst);
 
 /*
 * os_dlist_size
-* @brief  »ñÈ¡Á´±í³¤¶È
-* @param  os_lst  Á´±íÖ¸Õë
-* @return Á´±í³¤¶È
+* @brief  è·å–é“¾è¡¨é•¿åº¦
+* @param  os_lst  é“¾è¡¨æŒ‡é’ˆ
+* @return é“¾è¡¨é•¿åº¦
 */
-size_t os_dlist_size(const os_dlist_t * os_lst);
+OS_API size_t os_dlist_size(const os_dlist_t * os_lst);
 
 /*
 * os_dlist_add
-* @brief  ÏòÁ´±íÖĞÌí¼ÓÊı¾İ
-* @param  os_lst   Á´±íÖ¸Õë
-* @param  os_node  ½ÚµãÖ¸Õë ¿ÉÎª¿Õ£¬²»Îª¿ÕÔòÌí¼Óµ½¸Ã½ÚµãÖ®ºó
-* @param  data     Êı¾İ
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  å‘é“¾è¡¨ä¸­æ·»åŠ æ•°æ®
+* @param  os_lst   é“¾è¡¨æŒ‡é’ˆ
+* @param  os_node  èŠ‚ç‚¹æŒ‡é’ˆ å¯ä¸ºç©ºï¼Œä¸ä¸ºç©ºåˆ™æ·»åŠ åˆ°è¯¥èŠ‚ç‚¹ä¹‹å
+* @param  data     æ•°æ®
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
-bool os_dlist_add(os_dlist_t * os_lst, os_dlist_node_t * os_node, void * data);
+OS_API bool os_dlist_add(os_dlist_t * os_lst, os_dlist_node_t * os_node, void * data);
 
 /*
 * os_dlist_delete
-* @brief  ´ÓÁ´±íÖĞÉ¾³ıÊı¾İ
-* @param  os_lst   Á´±íÖ¸Õë
-* @param  os_node  ÒªÉ¾³ıµÄ½ÚµãÖ¸Õë
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  ä»é“¾è¡¨ä¸­åˆ é™¤æ•°æ®
+* @param  os_lst   é“¾è¡¨æŒ‡é’ˆ
+* @param  os_node  è¦åˆ é™¤çš„èŠ‚ç‚¹æŒ‡é’ˆ
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
-bool os_dlist_delete(os_dlist_t * os_lst, os_dlist_node_t * os_node);
+OS_API bool os_dlist_delete(os_dlist_t * os_lst, os_dlist_node_t * os_node);
 
 /*
 * os_dlist_head
-* @brief  »ñÈ¡Á´±íÍ·½Úµã
-* @param  os_lst   Á´±íÖ¸Õë
-* @return Í·½ÚµãÖ¸Õë»òÕßNULL
+* @brief  è·å–é“¾è¡¨å¤´èŠ‚ç‚¹
+* @param  os_lst   é“¾è¡¨æŒ‡é’ˆ
+* @return å¤´èŠ‚ç‚¹æŒ‡é’ˆæˆ–è€…NULL
 */
 OS_API os_dlist_node_t * os_dlist_head(const os_dlist_t * os_lst);
 
 /*
 * os_dlist_tail
-* @brief  »ñÈ¡Á´±íÎ²½Úµã
-* @param  os_lst   Á´±íÖ¸Õë
-* @return Î²½ÚµãÖ¸Õë»òÕßNULL
+* @brief  è·å–é“¾è¡¨å°¾èŠ‚ç‚¹
+* @param  os_lst   é“¾è¡¨æŒ‡é’ˆ
+* @return å°¾èŠ‚ç‚¹æŒ‡é’ˆæˆ–è€…NULL
 */
 OS_API os_dlist_node_t * os_dlist_tail(const os_dlist_t * os_lst);
 
 /*
 * os_dlist_next
-* @brief  »ñÈ¡½ÚµãµÄÏÂÒ»¸ö½Úµã
-* @param  os_node   ½ÚµãÖ¸Õë
-* @return ½ÚµãÏÂÒ»¸ö½ÚµãÖ¸Õë»òÕßNULL
+* @brief  è·å–èŠ‚ç‚¹çš„ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
+* @param  os_node   èŠ‚ç‚¹æŒ‡é’ˆ
+* @return èŠ‚ç‚¹ä¸‹ä¸€ä¸ªèŠ‚ç‚¹æŒ‡é’ˆæˆ–è€…NULL
 */
 OS_API os_dlist_node_t * os_dlist_next(const os_dlist_node_t * os_node);
 
 /*
 * os_dlist_prev
-* @brief  »ñÈ¡½ÚµãµÄÉÏÒ»¸ö½Úµã
-* @param  os_node   ½ÚµãÖ¸Õë
-* @return ½ÚµãÉÏÒ»¸ö½ÚµãÖ¸Õë»òÕßNULL
+* @brief  è·å–èŠ‚ç‚¹çš„ä¸Šä¸€ä¸ªèŠ‚ç‚¹
+* @param  os_node   èŠ‚ç‚¹æŒ‡é’ˆ
+* @return èŠ‚ç‚¹ä¸Šä¸€ä¸ªèŠ‚ç‚¹æŒ‡é’ˆæˆ–è€…NULL
 */
 OS_API os_dlist_node_t * os_dlist_prev(const os_dlist_node_t * os_node);
 
 /*
 * os_dlist_getdata
-* @brief  »ñÈ¡½ÚµãµÄÊı¾İÖ¸Õë
-* @param  os_node   ½ÚµãÖ¸Õë
-* @return ½ÚµãÊı¾İÖ¸Õë»òÕßNULL
+* @brief  è·å–èŠ‚ç‚¹çš„æ•°æ®æŒ‡é’ˆ
+* @param  os_node   èŠ‚ç‚¹æŒ‡é’ˆ
+* @return èŠ‚ç‚¹æ•°æ®æŒ‡é’ˆæˆ–è€…NULL
 */
 OS_API void * os_dlist_getdata(const os_dlist_node_t * node);
 
 /*
 * os_queue_create
-* @brief  ´´½¨¶ÓÁĞ
-* @param  node_size  ½Úµã´óĞ¡
-* @return ¶ÓÁĞÖ¸Õë»òÕßÎªNULL 
+* @brief  åˆ›å»ºé˜Ÿåˆ—
+* @param  node_size  èŠ‚ç‚¹å¤§å°
+* @return é˜Ÿåˆ—æŒ‡é’ˆæˆ–è€…ä¸ºNULL
 */
 OS_API os_queue_t * os_queue_create(uint32_t node_size);
 
 /*
 * os_queue_destroy
-* @brief  Ïú»Ù¶ÓÁĞ
-* @param  os_queue  Ö¸Ïò¶ÓÁĞÖ¸ÕëµÄÖ¸Õë
+* @brief  é”€æ¯é˜Ÿåˆ—
+* @param  os_queue  æŒ‡å‘é˜Ÿåˆ—æŒ‡é’ˆçš„æŒ‡é’ˆ
 */
 OS_API void os_queue_destroy(os_queue_t ** os_queue);
 
 /*
 * os_queue_clear
-* @brief  Çå¿Õ¶ÓÁĞ
-* @param  os_queue ¶ÓÁĞÖ¸Õë
+* @brief  æ¸…ç©ºé˜Ÿåˆ—
+* @param  os_queue é˜Ÿåˆ—æŒ‡é’ˆ
 */
 OS_API void os_queue_clear(os_queue_t * os_queue);
 
 /*
 * os_queue_empty
-* @brief  ÅĞ¶Ï¶ÓÁĞÊÇ·ñÎª¿Õ
-* @param  os_queue  ¶ÓÁĞÖ¸Õë
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  åˆ¤æ–­é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º
+* @param  os_queue  é˜Ÿåˆ—æŒ‡é’ˆ
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
 OS_API bool os_queue_empty(os_queue_t * os_queue);
 
 /*
 * os_queue_size
-* @brief  »ñÈ¡¶ÓÁĞ³¤¶È
-* @param  os_queue  ¶ÓÁĞÖ¸Õë
-* @return ¶ÓÁĞ³¤¶È
+* @brief  è·å–é˜Ÿåˆ—é•¿åº¦
+* @param  os_queue  é˜Ÿåˆ—æŒ‡é’ˆ
+* @return é˜Ÿåˆ—é•¿åº¦
 */
 OS_API size_t os_queue_size(const os_queue_t * os_queue);
 
 /*
 * os_queue_push
-* @brief  ²åÈëÊı¾İ
-* @param  os_queue  ¶ÓÁĞÖ¸Õë
-* @param  data  Êı¾İÖ¸Õë
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  æ’å…¥æ•°æ®
+* @param  os_queue  é˜Ÿåˆ—æŒ‡é’ˆ
+* @param  data  æ•°æ®æŒ‡é’ˆ
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
 OS_API bool os_queue_push(os_queue_t * os_queue, void * data);
 
 /*
 * os_queue_pop
-* @brief  É¾³ı¶ÓÁĞÍ·
-* @param  os_queue  ¶ÓÁĞÖ¸Õë
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  åˆ é™¤é˜Ÿåˆ—å¤´
+* @param  os_queue  é˜Ÿåˆ—æŒ‡é’ˆ
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
 OS_API bool os_queue_pop(os_queue_t * os_queue);
 
 /*
 * os_queue_front
-* @brief  »ñÈ¡¶ÓÁĞÍ·
-* @param  os_queue  ¶ÓÁĞÖ¸Õë
-* @return Í·½áµãÖ¸Õë»òÕßNULL
+* @brief  è·å–é˜Ÿåˆ—å¤´
+* @param  os_queue  é˜Ÿåˆ—æŒ‡é’ˆ
+* @return å¤´ç»“ç‚¹æŒ‡é’ˆæˆ–è€…NULL
 */
 OS_API os_queue_node_t * os_queue_front(os_queue_t * os_queue);
 
 /*
 * os_queue_getdata
-* @brief  »ñÈ¡½ÚµãÊı¾İ
-* @param  node    ½ÚµãÖ¸Õë
-* @return Êı¾İÖ¸Õë
+* @brief  è·å–èŠ‚ç‚¹æ•°æ®
+* @param  node    èŠ‚ç‚¹æŒ‡é’ˆ
+* @return æ•°æ®æŒ‡é’ˆ
 */
 OS_API void * os_queue_getdata(const os_queue_node_t * node);
 
 /*
 * log_msg_init
-* @brief  ÈÕÖ¾³õÊ¼»¯
-* @param  file    ÈÕÖ¾ÎÄ¼ş
-* @param  level   Ğ´ÈëÎÄ¼şµÄÈÕÖ¾¼¶±ğ
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  æ—¥å¿—åˆå§‹åŒ–
+* @param  file    æ—¥å¿—æ–‡ä»¶
+* @param  level   å†™å…¥æ–‡ä»¶çš„æ—¥å¿—çº§åˆ«
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
 OS_API bool log_msg_init(const char * file, LOG_MSG_LEVEL level);
 
 /*
 * log_msg_uninit
-* @brief  ÈÕÖ¾Ïú»Ù
+* @brief  æ—¥å¿—é”€æ¯
 */
 OS_API void log_msg_uninit();
 
 /*
 * log_msg
-* @brief  ´òÓ¡ÈÕÖ¾
-* @param  level  ÈÕÖ¾¼¶±ğ
-* @param  file   ÈÕÖ¾ÏûÏ¢ËùÔÚÎÄ¼ş
-* @param  line   ÈÕÖ¾ÏûÏ¢ËùÔÚĞĞÊı
-* @param  func   ÈÕÖ¾ÏûÏ¢ËùÔÚº¯Êı
-* @param  fmt    ÈÕÖ¾¸ñÊ½
+* @brief  æ‰“å°æ—¥å¿—
+* @param  level  æ—¥å¿—çº§åˆ«
+* @param  file   æ—¥å¿—æ¶ˆæ¯æ‰€åœ¨æ–‡ä»¶
+* @param  line   æ—¥å¿—æ¶ˆæ¯æ‰€åœ¨è¡Œæ•°
+* @param  func   æ—¥å¿—æ¶ˆæ¯æ‰€åœ¨å‡½æ•°
+* @param  fmt    æ—¥å¿—æ ¼å¼
 */
 OS_API int log_msg(LOG_MSG_LEVEL level, const char * file, int line, const char * func, const char * fmt, ...);
 
@@ -264,8 +274,6 @@ OS_API int log_msg(LOG_MSG_LEVEL level, const char * file, int line, const char 
 #define log_msg_error(...) log_msg(LOG_LEVEL_ERROR, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__)
 #define log_msg_fatal(...) log_msg(LOG_LEVEL_FATAL, __FILE__, __LINE__, __FUNCTION__, __VA_ARGS__)
 
-#ifdef __cplusplus
-}
-#endif
+OS_API_END
 
 #endif

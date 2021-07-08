@@ -24,6 +24,8 @@ typedef struct _os_dlist_node_t os_dlist_node_t;
 typedef struct _os_dlist_t os_dlist_t;
 typedef struct _os_queue_node_t os_queue_node_t;
 typedef struct _os_queue_t os_queue_t;
+typedef struct _os_hash_node_t os_hash_node_t;
+typedef struct _os_hash_table_t os_hash_table_t;
 
 #ifdef __cplusplus
 #define OS_API_BEGIN extern "C" {

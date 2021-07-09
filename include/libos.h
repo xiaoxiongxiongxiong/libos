@@ -24,6 +24,8 @@ typedef struct _os_dlist_node_t os_dlist_node_t;
 typedef struct _os_dlist_t os_dlist_t;
 typedef struct _os_queue_node_t os_queue_node_t;
 typedef struct _os_queue_t os_queue_t;
+typedef struct _os_hash_node_t os_hash_node_t;
+typedef struct _os_hash_table_t os_hash_table_t;
 
 #ifdef __cplusplus
 #define OS_API_BEGIN extern "C" {
@@ -242,6 +244,130 @@ OS_API os_queue_node_t * os_queue_front(os_queue_t * os_queue);
 * @return 数据指针
 */
 OS_API void * os_queue_getdata(const os_queue_node_t * node);
+
+/*
+* os_hash_table_create
+* @brief  创建哈希表
+* @return 哈希表指针
+*/
+OS_API os_hash_table_t * os_hash_table_create();
+
+/*
+* os_hash_table_destroy
+* @brief  销毁哈希表
+* @param  ht    哈希表指针
+* @return 无
+*/
+OS_API void os_hash_table_destroy(os_hash_table_t ** ht);
+
+/*
+* os_hash_table_clear
+* @brief  清空哈希表
+* @param  ht    哈希表指针
+* @return 无
+*/
+OS_API void os_hash_table_clear(os_hash_table_t * ht);
+
+/*
+* os_hash_table_empty
+* @brief  判断哈希表是否为空
+* @param  ht    哈希表指针
+* @return 数据指针
+*/
+OS_API bool os_hash_table_empty(const os_hash_table_t * ht);
+
+/*
+* os_hash_table_size
+* @brief  获取哈希表长度
+* @param  ht    哈希表指针
+* @return 数据指针
+*/
+OS_API size_t os_hash_table_size(const os_hash_table_t * ht);
+
+/*
+* os_hash_table_add
+* @brief  哈希表添加数据
+* @param  ht        哈希表指针
+* @param  key       关键字
+* @param  key_len   关键字长度
+* @param  value     数据
+* @param  value_len 数据长度
+* @return true--成功 false--失败
+*/
+OS_API bool os_hash_table_add(os_hash_table_t * ht, const void * key, const size_t key_len, const void * value, const size_t value_len);
+
+/*
+* os_hash_table_delete
+* @brief  哈希表删除数据
+* @param  ht        哈希表指针
+* @param  hn        节点指针
+* @return true--成功 false--失败
+*/
+OS_API bool os_hash_table_delete(os_hash_table_t * ht, os_hash_node_t * hn);
+
+/*
+* os_hash_table_delete_by_key
+* @brief  哈希表根据关键字删除数据
+* @param  ht        哈希表指针
+* @param  key       关键字
+* @param  key_len   关键字指针
+* @return true--成功 false--失败
+*/
+OS_API bool os_hash_table_delete_by_key(os_hash_table_t * ht, const void * key, const size_t key_len);
+
+/*
+* os_hash_table_modify
+* @brief  修改哈希表节点数据
+* @param  ht        哈希表指针
+* @param  key       关键字
+* @param  key_len   关键字长度
+* @param  value     数据
+* @param  value_len 数据长度
+* @return true--成功 false--失败
+*/
+OS_API bool os_hash_table_modify(os_hash_table_t * ht, const void * key, const size_t key_len, const void * value, const size_t value_len);
+
+/*
+* os_hash_table_find
+* @brief  哈希表查找数据
+* @param  ht        哈希表指针
+* @param  key       关键字指针
+* @param  key_len   关键字长度
+* @return 节点指针
+*/
+OS_API os_hash_node_t * os_hash_table_find(os_hash_table_t * ht, const void * key, const size_t key_len);
+
+/*
+* os_hash_table_head
+* @brief  获取哈希表头节点
+* @param  ht        哈希表指针
+* @return 头节点指针
+*/
+OS_API os_hash_node_t * os_hash_table_head(const os_hash_table_t * ht);
+
+/*
+* os_hash_table_next
+* @brief  获取下个节点指针
+* @param  hn         节点指针
+* @return 节点指针
+*/
+OS_API os_hash_node_t * os_hash_table_next(const os_hash_node_t * hn);
+
+/*
+* os_hash_table_get_key
+* @brief  获取节点关键字
+* @param  hn         节点指针
+* @return 关键字指针
+*/
+OS_API void * os_hash_table_get_key(const os_hash_node_t * hn);
+
+/*
+* os_hash_table_get_value
+* @brief  获取节点数据指针
+* @param  hn         节点指针
+* @return 数据指针
+*/
+OS_API void * os_hash_table_get_value(const os_hash_node_t * hn);
 
 /*
 * log_msg_init

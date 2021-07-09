@@ -7,6 +7,9 @@
     <Filter Include="src">
       <UniqueIdentifier>{224b67a6-d52c-49d8-a4fc-3d9f78f29578}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\uthash">
+      <UniqueIdentifier>{9c7a3747-9f13-4b8a-a4b7-7cf448a637d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\mutex.c">
@@ -21,10 +24,16 @@
     <ClCompile Include="..\..\src\dlist.c">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\hashtable.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\libos.h">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\uthash\uthash.h">
+      <Filter>src\uthash</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

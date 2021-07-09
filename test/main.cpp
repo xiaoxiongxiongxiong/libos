@@ -1,36 +1,43 @@
 ﻿#include "libos.h"
 #include <stdlib.h>
 
-typedef struct _test_node_t
-{
-    int data;
-} test_node_t;
-
 int main(int argc, char * argv[])
 {
     log_msg_init(NULL, LOG_LEVEL_INFO);
     atexit(log_msg_uninit);
 
-    auto lst = os_dlist_create(sizeof(int));
-    if (nullptr == lst)
+    auto ht = os_hash_table_create();
+    if (nullptr == ht)
     {
-        log_msg_warn("os_dlist_create failed!");
+        log_msg_warn("os_hash_table_create failed");
         return EXIT_FAILURE;
     }
 
     for (int i = 0; i < 10; i++)
     {
-        test_node_t node = { 0 };
-        node.data = i;
-        os_dlist_add(lst, nullptr, &node);
+        if (!os_hash_table_add(ht, &i, sizeof(int), &i, sizeof(int)))
+        {
+            log_msg_warn("os_hash_table_add failed");
+            break;
+        }
     }
 
-    auto head = os_dlist_head(lst);
+    for (int i = 0; i < 10; i++)
+    {
+        auto hn = os_hash_table_find(ht, &i, sizeof(int));
+        if (nullptr != hn)
+        {
+            int value = *(int *)os_hash_table_get_value(hn);
+            log_msg_info("value:%d", value);
+        }
+    }
+
+    auto head = os_hash_table_head(ht);
     while (nullptr != head)
     {
-        auto node = (test_node_t *)os_dlist_getdata(head);
-        log_msg_info("%d", node->data);
-        head = os_dlist_next(head);
+        int value = *(int *)os_hash_table_get_value(head);
+        log_msg_info("value:%d", value);
+        head = os_hash_table_next(head);
     }
 
     return EXIT_SUCCESS;

@@ -49,9 +49,7 @@ void os_hash_table_destroy(os_hash_table_t ** ht)
         return;
     }
 
-    // TODO 清空哈希表
-    //if (0 != (*ht)->size)
-    //    int a = 0;
+    os_hash_table_clear(*ht);
 
     if (NULL != (*ht)->mtx)
     {
@@ -79,7 +77,7 @@ void os_hash_table_clear(os_hash_table_t * ht)
     {
         HASH_DEL(ht->head, node);
 
-        if (node->value != NULL)
+        if (NULL != node->value)
         {
             free(node->value);
             node->value = NULL;
@@ -132,11 +130,13 @@ bool os_hash_table_add(os_hash_table_t * ht, const void * key, const size_t key_
     }
 
     os_hash_node_t * node = NULL;
+    os_mutex_lock(ht->mtx);
     HASH_FIND(hh, ht->head, key, key_len, node);
 
-    if (node != NULL)
+    if (NULL != node)
     {
         log_msg_warn("repeated key");
+        os_mutex_unlock(ht->mtx);
         return false;
     }
 
@@ -145,6 +145,7 @@ bool os_hash_table_add(os_hash_table_t * ht, const void * key, const size_t key_
     {
         const int code = errno;
         log_msg_error("malloc os_hash_node_t failed, code: %d, err: %s", code, strerror(code));
+        os_mutex_unlock(ht->mtx);
         return false;
     }
     memset(node, 0, sizeof(os_hash_node_t) + key_len);
@@ -157,6 +158,7 @@ bool os_hash_table_add(os_hash_table_t * ht, const void * key, const size_t key_
             const int code = errno;
             log_msg_error("malloc failed, code: %d, err: %s", code, strerror(code));
             free(node);
+            os_mutex_unlock(ht->mtx);
             return false;
         }
 
@@ -167,6 +169,7 @@ bool os_hash_table_add(os_hash_table_t * ht, const void * key, const size_t key_
     node->key_len = key_len;
 
     HASH_ADD(hh, ht->head, key, key_len, node);
+    os_mutex_unlock(ht->mtx);
 
     return true;
 }
@@ -179,7 +182,9 @@ bool os_hash_table_delete(os_hash_table_t * ht, os_hash_node_t * hn)
         return false;
     }
 
+    os_mutex_lock(ht->mtx);
     HASH_DEL(ht->head, hn);
+    os_mutex_unlock(ht->mtx);
 
     if (NULL != hn->value)
     {
@@ -202,14 +207,17 @@ bool os_hash_table_delete_by_key(os_hash_table_t * ht, const void * key, const s
     }
 
     os_hash_node_t * hn = NULL;
+    os_mutex_lock(ht->mtx);
     HASH_FIND(hh, ht->head, key, key_len, hn);
 
-    if (hn == NULL)
+    if (NULL == hn)
     {
+        os_mutex_unlock(ht->mtx);
         return true;
     }
 
     HASH_DEL(ht->head, hn);
+    os_mutex_unlock(ht->mtx);
 
     if (hn->value != NULL)
     {
@@ -221,4 +229,102 @@ bool os_hash_table_delete_by_key(os_hash_table_t * ht, const void * key, const s
     hn = NULL;
 
     return true;
+}
+
+bool os_hash_table_modify(os_hash_table_t * ht, const void * key, const size_t key_len, const void * value, const size_t value_len)
+{
+    if (NULL == ht || NULL == key || 0 == key_len)
+    {
+        log_msg_warn("Input param is nullptr or invalid");
+        return NULL;
+    }
+
+    os_hash_node_t * hn = NULL;
+    os_mutex_lock(ht->mtx);
+    HASH_FIND(hh, ht->head, key, key_len, hn);
+    os_mutex_unlock(ht->mtx);
+
+    if (hn == NULL)
+    {
+        log_msg_warn("non-existent value");
+        return false;
+    }
+
+    if (value == NULL)
+    {
+        free(hn->value);
+        hn->value = NULL;
+    }
+    else
+    {
+        hn->value = realloc(hn->value, value_len);
+        memcpy(hn->value, value, value_len);
+    }
+
+    return true;
+}
+
+os_hash_node_t * os_hash_table_find(os_hash_table_t * ht, const void * key, const size_t key_len)
+{
+    if (NULL == ht || NULL == key || 0 == key_len)
+    {
+        log_msg_warn("Input param is nullptr or invalid");
+        return NULL;
+    }
+
+    os_hash_node_t * hn = NULL;
+    os_mutex_lock(ht->mtx);
+    HASH_FIND(hh, ht->head, key, key_len, hn);
+    os_mutex_unlock(ht->mtx);
+
+    return hn;
+}
+
+os_hash_node_t * os_hash_table_head(const os_hash_table_t * ht)
+{
+    if (NULL == ht)
+    {
+        log_msg_warn("Input param is nullptr");
+        return NULL;
+    }
+
+    os_hash_node_t * head = NULL;
+    os_mutex_lock(ht->mtx);
+    head = ht->head;
+    os_mutex_unlock(ht->mtx);
+
+    return head;
+}
+
+os_hash_node_t * os_hash_table_next(const os_hash_node_t * hn)
+{
+    if (NULL == hn)
+    {
+        log_msg_warn("Input param is nullptr");
+        return NULL;
+    }
+
+    return (os_hash_node_t *)hn->hh.next;
+}
+
+void * os_hash_table_get_key(const os_hash_node_t * hn)
+{
+    if (NULL == hn)
+    {
+        log_msg_warn("Input param is nullptr");
+        return NULL;
+    }
+
+    return (void *)hn->key;
+}
+
+void * os_hash_table_get_value(const os_hash_node_t * hn)
+{
+    if (NULL == hn)
+    {
+        log_msg_warn("Input param is nullptr");
+        return NULL;
+    }
+
+    return hn->value;
 }

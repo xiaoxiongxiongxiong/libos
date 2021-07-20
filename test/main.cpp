@@ -37,8 +37,11 @@ int main(int argc, char * argv[])
     {
         int value = *(int *)os_hash_table_get_value(head);
         log_msg_info("value:%d", value);
+        os_hash_table_delete(ht, head);
         head = os_hash_table_next(head);
     }
+
+    os_hash_table_destroy(&ht);
 
     return EXIT_SUCCESS;
 }

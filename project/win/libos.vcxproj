@@ -162,10 +162,10 @@
     <ClInclude Include="..\..\include\libos.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\liblist.c" />
-    <ClCompile Include="..\..\src\libmutex.c" />
-    <ClCompile Include="..\..\src\libos.c" />
-    <ClCompile Include="..\..\src\libqueue.c" />
+    <ClCompile Include="..\..\src\dlist.c" />
+    <ClCompile Include="..\..\src\mutex.c" />
+    <ClCompile Include="..\..\src\log.c" />
+    <ClCompile Include="..\..\src\queue.c" />
     <ClCompile Include="..\..\src\libstack.c" />
   </ItemGroup>
   <ItemGroup>

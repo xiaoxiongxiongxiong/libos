@@ -25,16 +25,16 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\libos.c">
+    <ClCompile Include="..\..\src\log.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libqueue.c">
+    <ClCompile Include="..\..\src\queue.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libmutex.c">
+    <ClCompile Include="..\..\src\mutex.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\liblist.c">
+    <ClCompile Include="..\..\src\dlist.c">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libstack.c">

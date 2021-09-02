@@ -47,43 +47,43 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
-    <RemoteRootDir>~/item</RemoteRootDir>
-    <RemoteProjectRelDir>$(SolutionName)</RemoteProjectRelDir>
+    <RemoteRootDir>~/projects/item</RemoteRootDir>
+    <RemoteProjectRelDir>libos</RemoteProjectRelDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
-    <RemoteRootDir>~/item</RemoteRootDir>
-    <RemoteProjectRelDir>$(SolutionName)</RemoteProjectRelDir>
+    <RemoteRootDir>~/projects/item</RemoteRootDir>
+    <RemoteProjectRelDir>libos</RemoteProjectRelDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
-    <RemoteRootDir>~/item</RemoteRootDir>
-    <RemoteProjectRelDir>$(SolutionName)</RemoteProjectRelDir>
+    <RemoteRootDir>~/projects/item</RemoteRootDir>
+    <RemoteProjectRelDir>libos</RemoteProjectRelDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
-    <RemoteRootDir>~/item</RemoteRootDir>
-    <RemoteProjectRelDir>$(SolutionName)</RemoteProjectRelDir>
+    <RemoteRootDir>~/projects/item</RemoteRootDir>
+    <RemoteProjectRelDir>libos</RemoteProjectRelDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
-    <RemoteRootDir>~/item</RemoteRootDir>
-    <RemoteProjectRelDir>$(SolutionName)</RemoteProjectRelDir>
+    <RemoteRootDir>~/projects/item</RemoteRootDir>
+    <RemoteProjectRelDir>libos</RemoteProjectRelDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
-    <RemoteRootDir>~/item</RemoteRootDir>
-    <RemoteProjectRelDir>$(SolutionName)</RemoteProjectRelDir>
+    <RemoteRootDir>~/projects/item</RemoteRootDir>
+    <RemoteProjectRelDir>libos</RemoteProjectRelDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
     <UseDebugLibraries>false</UseDebugLibraries>
-    <RemoteRootDir>~/item</RemoteRootDir>
-    <RemoteProjectRelDir>$(SolutionName)</RemoteProjectRelDir>
+    <RemoteRootDir>~/projects/item</RemoteRootDir>
+    <RemoteProjectRelDir>libos</RemoteProjectRelDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
     <UseDebugLibraries>true</UseDebugLibraries>
-    <RemoteRootDir>~/item</RemoteRootDir>
-    <RemoteProjectRelDir>$(SolutionName)</RemoteProjectRelDir>
+    <RemoteRootDir>~/projects/item</RemoteRootDir>
+    <RemoteProjectRelDir>libos</RemoteProjectRelDir>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings" />
@@ -94,64 +94,64 @@
     <OutDir>$(ProjectDir)..\..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RemoteProjectDir>$(RemoteRootDir)/$(SolutionName)</RemoteProjectDir>
-    <RemoteIntRelDir>$(RemoteProjectRelDir)/project/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
-    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)</RemoteOutRelDir>
+    <RemoteIntRelDir>$(RemoteProjectRelDir)/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
+    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)/</RemoteOutRelDir>
     <RemoteDeployDir>$(RemoteRootDir)/$(SolutionName)</RemoteDeployDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <OutDir>$(ProjectDir)..\..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RemoteProjectDir>$(RemoteRootDir)/$(SolutionName)</RemoteProjectDir>
-    <RemoteIntRelDir>$(RemoteProjectRelDir)/project/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
-    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)</RemoteOutRelDir>
+    <RemoteIntRelDir>$(RemoteProjectRelDir)/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
+    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)/</RemoteOutRelDir>
     <RemoteDeployDir>$(RemoteRootDir)/$(SolutionName)</RemoteDeployDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <OutDir>$(ProjectDir)..\..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RemoteProjectDir>$(RemoteRootDir)/$(SolutionName)</RemoteProjectDir>
-    <RemoteIntRelDir>$(RemoteProjectRelDir)/project/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
-    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)</RemoteOutRelDir>
+    <RemoteIntRelDir>$(RemoteProjectRelDir)/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
+    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)/</RemoteOutRelDir>
     <RemoteDeployDir>$(RemoteRootDir)/$(SolutionName)</RemoteDeployDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <OutDir>$(ProjectDir)..\..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RemoteProjectDir>$(RemoteRootDir)/$(SolutionName)</RemoteProjectDir>
-    <RemoteIntRelDir>$(RemoteProjectRelDir)/project/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
-    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)</RemoteOutRelDir>
+    <RemoteIntRelDir>$(RemoteProjectRelDir)/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
+    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)/</RemoteOutRelDir>
     <RemoteDeployDir>$(RemoteRootDir)/$(SolutionName)</RemoteDeployDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(ProjectDir)..\..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RemoteProjectDir>$(RemoteRootDir)/$(SolutionName)</RemoteProjectDir>
-    <RemoteIntRelDir>$(RemoteProjectRelDir)/project/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
-    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)</RemoteOutRelDir>
+    <RemoteIntRelDir>$(RemoteProjectRelDir)/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
+    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)/</RemoteOutRelDir>
     <RemoteDeployDir>$(RemoteRootDir)/$(SolutionName)</RemoteDeployDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(ProjectDir)..\..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RemoteProjectDir>$(RemoteRootDir)/$(SolutionName)</RemoteProjectDir>
-    <RemoteIntRelDir>$(RemoteProjectRelDir)/project/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
-    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)</RemoteOutRelDir>
+    <RemoteIntRelDir>$(RemoteProjectRelDir)/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
+    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)/</RemoteOutRelDir>
     <RemoteDeployDir>$(RemoteRootDir)/$(SolutionName)</RemoteDeployDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x86'">
     <OutDir>$(ProjectDir)..\..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RemoteProjectDir>$(RemoteRootDir)/$(SolutionName)</RemoteProjectDir>
-    <RemoteIntRelDir>$(RemoteProjectRelDir)/project/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
-    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)</RemoteOutRelDir>
+    <RemoteIntRelDir>$(RemoteProjectRelDir)/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
+    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)/</RemoteOutRelDir>
     <RemoteDeployDir>$(RemoteRootDir)/$(SolutionName)</RemoteDeployDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
     <OutDir>$(ProjectDir)..\..\bin\$(Platform)\$(Configuration)\</OutDir>
     <IntDir>$(ProjectDir)obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <RemoteProjectDir>$(RemoteRootDir)/$(SolutionName)</RemoteProjectDir>
-    <RemoteIntRelDir>$(RemoteProjectRelDir)/project/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
-    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)</RemoteOutRelDir>
+    <RemoteIntRelDir>$(RemoteProjectRelDir)/obj/$(ProjectName)/$(Platform)/$(Configuration)</RemoteIntRelDir>
+    <RemoteOutRelDir>$(RemoteProjectRelDir)/bin/$(Platform)/$(Configuration)/</RemoteOutRelDir>
     <RemoteDeployDir>$(RemoteRootDir)/$(SolutionName)</RemoteDeployDir>
   </PropertyGroup>
   <ItemGroup>
@@ -166,7 +166,8 @@
       <LibraryDependencies>pthread;os;%(LibraryDependencies)</LibraryDependencies>
     </Link>
     <RemotePostBuildEvent>
-      <Command>cp -f $(RemoteProjectDir)/lib/$(Platform)/$(Configuration)/libos.so $(RemoteProjectDir)/bin/$(Platform)/$(Configuration)/libos.so </Command>
+      <Command>
+      </Command>
     </RemotePostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
@@ -190,7 +191,8 @@
       <LibraryDependencies>pthread;os;%(LibraryDependencies)</LibraryDependencies>
     </Link>
     <RemotePostBuildEvent>
-      <Command>cp -f $(RemoteProjectDir)/lib/$(Platform)/$(Configuration)/libos.so $(RemoteProjectDir)/bin/$(Platform)/$(Configuration)/libos.so </Command>
+      <Command>
+      </Command>
     </RemotePostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
@@ -214,7 +216,8 @@
       <LibraryDependencies>pthread;os;%(LibraryDependencies)</LibraryDependencies>
     </Link>
     <RemotePostBuildEvent>
-      <Command>cp -f $(RemoteProjectDir)/lib/$(Platform)/$(Configuration)/libos.so $(RemoteProjectDir)/bin/$(Platform)/$(Configuration)/libos.so </Command>
+      <Command>
+      </Command>
     </RemotePostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -238,7 +241,8 @@
       <LibraryDependencies>pthread;os;%(LibraryDependencies)</LibraryDependencies>
     </Link>
     <RemotePostBuildEvent>
-      <Command>cp -f $(RemoteProjectDir)/lib/$(Platform)/$(Configuration)/libos.so $(RemoteProjectDir)/bin/$(Platform)/$(Configuration)/libos.so </Command>
+      <Command>
+      </Command>
     </RemotePostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">

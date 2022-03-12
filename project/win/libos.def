@@ -1,21 +1,18 @@
-LIBRARY "libos"
+﻿LIBRARY "libos"
 EXPORTS
-os_mutex_create
-os_mutex_destroy
-os_mutex_lock
-os_mutex_unlock
-os_dlist_create
-os_dlist_destroy
-os_dlist_clear
-os_dlist_empty
-os_dlist_size
-os_dlist_add
-os_dlist_delete
-os_dlist_head
-os_dlist_tail
-os_dlist_next
-os_dlist_prev
-os_dlist_getdata
+os_last_error
+os_list_create
+os_list_destroy
+os_list_clear
+os_list_empty
+os_list_size
+os_list_add
+os_list_delete
+os_list_head
+os_list_tail
+os_list_next
+os_list_prev
+os_list_getdata
 os_queue_create
 os_queue_destroy
 os_queue_clear
@@ -25,6 +22,3 @@ os_queue_push
 os_queue_pop
 os_queue_front
 os_queue_getdata
-log_msg_init
-log_msg_uninit
-log_msg

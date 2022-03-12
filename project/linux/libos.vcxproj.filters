@@ -2,38 +2,44 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="include">
-      <UniqueIdentifier>{74f3a7cd-f88d-43b4-ab08-627291e1acdc}</UniqueIdentifier>
+      <UniqueIdentifier>{7917a4f9-f63f-49a6-816f-7e43daa580fe}</UniqueIdentifier>
     </Filter>
     <Filter Include="src">
-      <UniqueIdentifier>{224b67a6-d52c-49d8-a4fc-3d9f78f29578}</UniqueIdentifier>
+      <UniqueIdentifier>{ae80b20a-06b1-4caf-8988-259822f7c90b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\uthash">
-      <UniqueIdentifier>{9c7a3747-9f13-4b8a-a4b7-7cf448a637d0}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\mutex.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\log.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\queue.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\dlist.c">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\hashtable.c">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\libos.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\uthash\uthash.h">
-      <Filter>src\uthash</Filter>
+    <ClInclude Include="..\..\include\os_list.h">
+      <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\os_log.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\os_queue.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\os_utils.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\libos.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\os_list.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\os_log.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\os_queue.c">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\os_utils.c">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

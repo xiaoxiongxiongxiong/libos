@@ -2,11 +2,11 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="src">
-      <UniqueIdentifier>{b7e164f0-df19-49fb-8aaf-076481b2216d}</UniqueIdentifier>
+      <UniqueIdentifier>{380d3290-51c1-40eb-a623-404d8fb525e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\test\main.cpp">
+    <ClCompile Include="..\..\examples\os_log_test.c">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

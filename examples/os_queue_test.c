@@ -5,7 +5,7 @@ int main(void)
     os_queue_t * queue = os_queue_create(sizeof(int));
     if (NULL == queue)
     {
-        printf("os_queue_create failed for %s\n", os_last_error());
+        printf("os_queue_create failed\n");
         return 1;
     }
 

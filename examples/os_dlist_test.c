@@ -46,8 +46,7 @@ int main(void)
     //}
 
     os_dlist_node_t * head = os_dlist_head(lst);
-    while (NULL != head)
-    {
+    while (NULL != head) {
         int * data = (int *)os_dlist_getdata(head);
         printf("num: %d\n", *data);
         head = os_dlist_next(head);

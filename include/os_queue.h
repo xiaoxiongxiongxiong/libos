@@ -1,5 +1,5 @@
-#ifndef __OS_QUEUE_H__
-#define __OS_QUEUE_H__
+ï»¿#ifndef _OS_QUEUE_H_
+#define _OS_QUEUE_H_
 
 #include "libos.h"
 #include <stdint.h>
@@ -11,72 +11,72 @@ OS_API_BEGIN
 
 /*
 * os_queue_create
-* @brief  ´´½¨¶ÓÁĞ
-* @param  node_size  ½Úµã´óĞ¡
-* @return ¶ÓÁĞÖ¸Õë»òÕßÎªNULL
+* @brief  åˆ›å»ºé˜Ÿåˆ—
+* @param  elem_size  å…ƒç´ å¤§å°
+* @return é˜Ÿåˆ—æŒ‡é’ˆæˆ–è€…ä¸ºNULL
 */
-OS_API os_queue_t * os_queue_create(uint32_t node_size);
+OS_API os_queue_t * os_queue_create(uint32_t elem_size);
 
 /*
 * os_queue_destroy
-* @brief  Ïú»Ù¶ÓÁĞ
-* @param  os_queue  Ö¸Ïò¶ÓÁĞÖ¸ÕëµÄÖ¸Õë
+* @brief  é”€æ¯é˜Ÿåˆ—
+* @param  q  æŒ‡å‘é˜Ÿåˆ—æŒ‡é’ˆçš„æŒ‡é’ˆ
 */
-OS_API void os_queue_destroy(os_queue_t ** os_queue);
+OS_API void os_queue_destroy(os_queue_t ** q);
 
 /*
 * os_queue_clear
-* @brief  Çå¿Õ¶ÓÁĞ
-* @param  os_queue ¶ÓÁĞÖ¸Õë
+* @brief  æ¸…ç©ºé˜Ÿåˆ—
+* @param  q é˜Ÿåˆ—æŒ‡é’ˆ
 */
-OS_API void os_queue_clear(os_queue_t * os_queue);
+OS_API void os_queue_clear(os_queue_t * q);
 
 /*
 * os_queue_empty
-* @brief  ÅĞ¶Ï¶ÓÁĞÊÇ·ñÎª¿Õ
-* @param  os_queue  ¶ÓÁĞÖ¸Õë
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  åˆ¤æ–­é˜Ÿåˆ—æ˜¯å¦ä¸ºç©º
+* @param  q  é˜Ÿåˆ—æŒ‡é’ˆ
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
-OS_API bool os_queue_empty(os_queue_t * os_queue);
+OS_API bool os_queue_empty(os_queue_t * q);
 
 /*
 * os_queue_size
-* @brief  »ñÈ¡¶ÓÁĞ³¤¶È
-* @param  os_queue  ¶ÓÁĞÖ¸Õë
-* @return ¶ÓÁĞ³¤¶È
+* @brief  è·å–é˜Ÿåˆ—é•¿åº¦
+* @param  q  é˜Ÿåˆ—æŒ‡é’ˆ
+* @return é˜Ÿåˆ—é•¿åº¦
 */
-OS_API size_t os_queue_size(os_queue_t * os_queue);
+OS_API size_t os_queue_size(os_queue_t * q);
 
 /*
 * os_queue_push
-* @brief  ²åÈëÊı¾İ
-* @param  os_queue  ¶ÓÁĞÖ¸Õë
-* @param  data  Êı¾İÖ¸Õë
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  æ’å…¥æ•°æ®
+* @param  q  é˜Ÿåˆ—æŒ‡é’ˆ
+* @param  data  æ•°æ®æŒ‡é’ˆ
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
-OS_API bool os_queue_push(os_queue_t * os_queue, void * data);
+OS_API bool os_queue_push(os_queue_t * q, void * data);
 
 /*
 * os_queue_pop
-* @brief  É¾³ı¶ÓÁĞÍ·
-* @param  os_queue  ¶ÓÁĞÖ¸Õë
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  åˆ é™¤é˜Ÿåˆ—å¤´
+* @param  q  é˜Ÿåˆ—æŒ‡é’ˆ
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
-OS_API bool os_queue_pop(os_queue_t * os_queue);
+OS_API bool os_queue_pop(os_queue_t * q);
 
 /*
 * os_queue_front
-* @brief  »ñÈ¡¶ÓÁĞÍ·
-* @param  os_queue  ¶ÓÁĞÖ¸Õë
-* @return Í·½áµãÖ¸Õë»òÕßNULL
+* @brief  è·å–é˜Ÿåˆ—å¤´
+* @param  q  é˜Ÿåˆ—æŒ‡é’ˆ
+* @return å¤´ç»“ç‚¹æŒ‡é’ˆæˆ–è€…NULL
 */
-OS_API os_queue_node_t * os_queue_front(os_queue_t * os_queue);
+OS_API os_queue_node_t * os_queue_front(os_queue_t * q);
 
 /*
 * os_queue_getdata
-* @brief  »ñÈ¡½ÚµãÊı¾İ
-* @param  node    ½ÚµãÖ¸Õë
-* @return Êı¾İÖ¸Õë
+* @brief  è·å–èŠ‚ç‚¹æ•°æ®
+* @param  node    èŠ‚ç‚¹æŒ‡é’ˆ
+* @return æ•°æ®æŒ‡é’ˆ
 */
 OS_API void * os_queue_getdata(const os_queue_node_t * node);
 

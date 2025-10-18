@@ -22,6 +22,4 @@
 #define OS_API
 #endif
 
-#define OS_ERR_MAX_LEN 260  // 错误信息最大长度
-
 #endif

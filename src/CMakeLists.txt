@@ -20,9 +20,9 @@ set (OS_QUEUE_LIB_SRC ${OS_QUEUE_SRC})
 add_library(libos_queue SHARED ${OS_QUEUE_LIB_SRC})
 
 # Ê÷
-#file (GLOB OS_TREE_SRC tree/*.c)
-#set (OS_TREE_LIB_SRC ${OS_TREE_SRC})
-#add_library(libos_tree SHARED ${OS_TREE_LIB_SRC})
+file (GLOB OS_TREE_SRC tree/*.c)
+set (OS_TREE_LIB_SRC ${OS_TREE_SRC})
+add_library(libos_tree SHARED ${OS_TREE_LIB_SRC})
 
 # install
 INSTALL (FILES ..include/*.h DESTINATION include)
@@ -37,8 +37,8 @@ install(TARGETS libos_queue
         LIBRARY DESTINATION lib
         RUNTIME DESTINATION bin
 )
-#install(TARGETS libos_tree
-#        ARCHIVE DESTINATION lib
-#        LIBRARY DESTINATION lib
-#        RUNTIME DESTINATION bin
-#)
+install(TARGETS libos_tree
+        ARCHIVE DESTINATION lib
+        LIBRARY DESTINATION lib
+        RUNTIME DESTINATION bin
+)

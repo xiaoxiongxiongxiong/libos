@@ -1,111 +1,131 @@
-#ifndef _OS_SINGLE_LIST_H_
+ï»¿#ifndef _OS_SINGLE_LIST_H_
 #define _OS_SINGLE_LIST_H_
 
 #include "libos.h"
 
 typedef struct _os_slist_t os_slist_t;
 typedef struct _os_slist_node_t os_slist_node_t;
+typedef bool (*os_slist_compare)(const void * data1, const void * data2);
 
 OS_API_BEGIN
 
 /*
 * os_slist_create
-* @brief  ´´½¨Á´±í
-* @param  elem_size  ½Úµã´óĞ¡
-* @return Á´±íÖ¸Õë»òÕßÎªNULL
+* @brief  åˆ›å»ºé“¾è¡¨
+* @param  elem_size  èŠ‚ç‚¹å¤§å°
+* @return é“¾è¡¨æŒ‡é’ˆæˆ–è€…ä¸ºNULL
 */
 OS_API os_slist_t * os_slist_create(const size_t elem_size);
 
 /*
 * os_slist_destroy
-* @brief  Ïú»ÙÁ´±í
-* @param  lst  Ö¸ÏòÁ´±íÖ¸ÕëµÄÖ¸Õë
+* @brief  é”€æ¯é“¾è¡¨
+* @param  lst  æŒ‡å‘é“¾è¡¨æŒ‡é’ˆçš„æŒ‡é’ˆ
 */
 OS_API void os_slist_destroy(os_slist_t ** lst);
 
 /*
 * os_slist_clear
-* @brief  Çå¿ÕÁ´±í
-* @param  lst  Á´±íÖ¸Õë
+* @brief  æ¸…ç©ºé“¾è¡¨
+* @param  lst  é“¾è¡¨æŒ‡é’ˆ
 */
 OS_API void os_slist_clear(os_slist_t * lst);
 
 /*
 * os_slist_empty
-* @brief  ÅĞ¶ÏÁ´±íÊÇ·ñÎª¿Õ
-* @param  lst  Á´±íÖ¸Õë
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  åˆ¤æ–­é“¾è¡¨æ˜¯å¦ä¸ºç©º
+* @param  lst  é“¾è¡¨æŒ‡é’ˆ
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
-OS_API bool os_slist_empty(os_slist_t * lst);
+OS_API bool os_slist_empty(const os_slist_t * lst);
 
 /*
 * os_slist_size
-* @brief  »ñÈ¡Á´±í³¤¶È
-* @param  lst  Á´±íÖ¸Õë
-* @return Á´±í³¤¶È
+* @brief  è·å–é“¾è¡¨é•¿åº¦
+* @param  lst  é“¾è¡¨æŒ‡é’ˆ
+* @return é“¾è¡¨é•¿åº¦
 */
-OS_API size_t os_slist_size(os_slist_t * lst);
+OS_API size_t os_slist_size(const os_slist_t * lst);
 
 /*
 * os_slist_add
-* @brief  ÏòÁ´±íÎ²²¿Ìí¼ÓÊı¾İ
-* @param  lst   Á´±íÖ¸Õë
-* @param  data  Êı¾İ
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  å‘é“¾è¡¨å°¾éƒ¨æ·»åŠ æ•°æ®
+* @param  lst   é“¾è¡¨æŒ‡é’ˆ
+* @param  data  æ•°æ®
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
 OS_API bool os_slist_add(os_slist_t * lst, void * data);
 
 /*
 * os_slist_insert
-* @brief  ÏòÁ´±íÖ¸¶¨Î»ÖÃ²åÈëÊı¾İ
-* @param  lst   Á´±í
-* @param  pos   Î»ÖÃ
-* @param  data  Êı¾İ
-* @return true--³É¹¦  false--Ê§°Ü
+* @brief  å‘é“¾è¡¨æŒ‡å®šä½ç½®æ’å…¥æ•°æ®
+* @param  lst   é“¾è¡¨
+* @param  pos   ä½ç½®
+* @param  data  æ•°æ®
+* @return true--æˆåŠŸ  false--å¤±è´¥
 */
 OS_API bool os_slist_insert(os_slist_t * lst, size_t pos, void * data);
 
 /*
 * os_slist_delete
-* @brief  ´ÓÁ´±íÖĞÉ¾³ıÊı¾İ
-* @param  lst   Á´±íÖ¸Õë
-* @param  node  ÒªÉ¾³ıµÄ½ÚµãÖ¸Õë
-* @return NULL »òÕßÏÂÒ»¸ö½Úµã
+* @brief  ä»é“¾è¡¨ä¸­åˆ é™¤æ•°æ®
+* @param  lst   é“¾è¡¨æŒ‡é’ˆ
+* @param  node  è¦åˆ é™¤çš„èŠ‚ç‚¹æŒ‡é’ˆ
+* @return NULL æˆ–è€…ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
 */
 OS_API os_slist_node_t * os_slist_delete(os_slist_t * lst, os_slist_node_t * node);
 
 /*
 * os_slist_delete_ex
-* @brief  ¸ù¾İÊı¾İ´ÓÁ´±íÖĞÉ¾³ı½Úµã
-* @param  lst   Á´±íÖ¸Õë
-* @param  data  Êı¾İ
-* @return true--³É¹¦ false--Ê§°Ü
+* @brief  æ ¹æ®æ•°æ®ä»é“¾è¡¨ä¸­åˆ é™¤èŠ‚ç‚¹
+* @param  lst   é“¾è¡¨æŒ‡é’ˆ
+* @param  data  æ•°æ®
+* @param  compare æ•°æ®åˆ é™¤æ¡ä»¶
+* @return true--æˆåŠŸ false--å¤±è´¥
 */
-OS_API bool os_slist_delete_ex(os_slist_t * lst, void * data);
+OS_API bool os_slist_delete_ex(os_slist_t * lst, void * data, os_slist_compare compare);
 
 /*
 * os_slist_head
-* @brief  »ñÈ¡Á´±íÍ·½Úµã
-* @param  lst   Á´±íÖ¸Õë
-* @return Í·½ÚµãÖ¸Õë»òÕßNULL
+* @brief  è·å–é“¾è¡¨å¤´èŠ‚ç‚¹
+* @param  lst   é“¾è¡¨æŒ‡é’ˆ
+* @return å¤´èŠ‚ç‚¹æŒ‡é’ˆæˆ–è€…NULL
 */
-OS_API os_slist_node_t * os_slist_head(os_slist_t * lst);
+OS_API os_slist_node_t * os_slist_head(const os_slist_t * lst);
 
 /*
 * os_slist_next
-* @brief  »ñÈ¡½ÚµãµÄÏÂÒ»¸ö½Úµã
-* @param  node   ½ÚµãÖ¸Õë
-* @return ½ÚµãÏÂÒ»¸ö½ÚµãÖ¸Õë»òÕßNULL
+* @brief  è·å–èŠ‚ç‚¹çš„ä¸‹ä¸€ä¸ªèŠ‚ç‚¹
+* @param  node   èŠ‚ç‚¹æŒ‡é’ˆ
+* @return èŠ‚ç‚¹ä¸‹ä¸€ä¸ªèŠ‚ç‚¹æŒ‡é’ˆæˆ–è€…NULL
 */
 OS_API os_slist_node_t * os_slist_next(const os_slist_node_t * node);
 
 /*
 * os_slist_getdata
-* @brief  »ñÈ¡½ÚµãµÄÊı¾İÖ¸Õë
-* @param  node   ½ÚµãÖ¸Õë
-* @return ½ÚµãÊı¾İÖ¸Õë»òÕßNULL
+* @brief  è·å–èŠ‚ç‚¹çš„æ•°æ®æŒ‡é’ˆ
+* @param  node   èŠ‚ç‚¹æŒ‡é’ˆ
+* @return èŠ‚ç‚¹æ•°æ®æŒ‡é’ˆæˆ–è€…NULL
 */
 OS_API void * os_slist_getdata(const os_slist_node_t * node);
+
+/*
+* os_slist_reverse_order
+* @brief  é€†åºæ•´ä¸ªé“¾è¡¨
+* @param  lst
+* @return é€†åºåçš„é“¾è¡¨
+*/
+OS_API os_slist_t * os_slist_reverse_order(os_slist_t * lst);
+
+/*
+* os_slist_merge
+* @brief  åˆå¹¶é“¾è¡¨
+* @param  lst1  é“¾è¡¨1
+* @param  lst2  é“¾è¡¨2
+* @param  compare è‡ªå®ç°data1ä¸data2æ¯”è¾ƒå‡½æ•°
+* @return åˆå¹¶åçš„é“¾è¡¨
+*/
+OS_API os_slist_t * os_slist_merge(os_slist_t * lst1, os_slist_t * lst2, os_slist_compare compare);
 
 OS_API_END
 

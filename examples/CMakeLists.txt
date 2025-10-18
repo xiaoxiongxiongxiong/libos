@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+ï»¿cmake_minimum_required(VERSION 3.8)
 message("CMake version: " ${CMAKE_VERSION})
 
 if(CMAKE_HOST_WIN32)
@@ -7,22 +7,28 @@ endif()
 
 include_directories(../include)
 
-# µ¥Á´±í
+# å•é“¾è¡¨
 set(SLIST_EAXMPLES_SRC "os_slist_test.c")
 add_executable(os_slist_test ${SLIST_EAXMPLES_SRC})
 target_link_libraries(os_slist_test libos_list)
 
-# Ë«Á´±í
+# åŒé“¾è¡¨
 set(DLIST_EAXMPLES_SRC "os_dlist_test.c")
 add_executable(os_dlist_test ${DLIST_EAXMPLES_SRC})
 target_link_libraries(os_dlist_test libos_list)
 
-# ¶ÓÁĞ
+# å•å‘é˜Ÿåˆ—
 set(QUEUE_EXAMPLES_SRC "os_queue_test.c")
 add_executable(os_queue_test ${QUEUE_EXAMPLES_SRC})
 target_link_libraries(os_queue_test libos_queue)
 
-# ¶¨Òå°²×°Â·¾¶
+# åŒå‘é˜Ÿåˆ—
+set(DEQUE_EXAMPLES_SRC "os_deque_test.c")
+add_executable(os_deque_test ${DEQUE_EXAMPLES_SRC})
+target_link_libraries(os_deque_test libos_queue)
+
+# å®šä¹‰å®‰è£…è·¯å¾„
 install(TARGETS os_slist_test DESTINATION bin)
 install(TARGETS os_dlist_test DESTINATION bin)
 install(TARGETS os_queue_test DESTINATION bin)
+install(TARGETS os_deque_test DESTINATION bin)

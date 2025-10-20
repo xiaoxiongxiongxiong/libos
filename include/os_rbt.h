@@ -17,6 +17,12 @@ OS_API_BEGIN
 typedef int(*os_rbt_compare)(const void * key1, const void * key2);
 
 /*
+* @brief  key/val申请函数
+* @param  data
+*/
+typedef void * (*os_rbt_malloc)(void * data);
+
+/*
 * @brief  key/val释放函数
 * @param  data
 */
@@ -26,11 +32,13 @@ typedef void(*os_rbt_free)(void * data);
 * os_rbt_create
 * @brief  创建红黑树
 * @param  cmp  键值比较函数
-* @param  key  key释放函数
-* @param  val  val释放函数
+* @param  km   key深拷贝函数
+* @param  vm   val深拷贝函数
+* @param  kf   key释放函数
+* @param  vf   val释放函数
 * @return NULL/实例
 */
-os_rbt_t * os_rbt_create(os_rbt_compare cmp, os_rbt_free key, os_rbt_free val);
+os_rbt_t * os_rbt_create(os_rbt_compare cmp, os_rbt_malloc km, os_rbt_malloc vm, os_rbt_free kf, os_rbt_free vf);
 
 /*
 * os_rbt_destroy

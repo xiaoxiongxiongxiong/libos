@@ -10,46 +10,41 @@ typedef enum _OS_RBT_COLOR_TYPE
 } OS_RBT_COLOR_TYPE;
 
 struct _os_rbt_node_t {
-	void * key;
-	void * val;
 	OS_RBT_COLOR_TYPE color;
 	struct _os_rbt_node_t * parent;
 	struct _os_rbt_node_t * left;
 	struct _os_rbt_node_t * right;
+	char data[0];
 };
 
 struct _os_rbt_t {
 	size_t size;
+	size_t elem_size;
+	size_t node_size;
 	os_rbt_node_t * root;
 	os_rbt_node_t * nil;
 	os_rbt_compare cmp;
-	os_rbt_malloc key_malloc;
-	os_rbt_malloc val_malloc;
-	os_rbt_free key_free;
-	os_rbt_free val_free;
 };
 
 // 创建一个节点
-static os_rbt_node_t * os_rbt_new_node(const os_rbt_t * rbt, void * key, void * val);
+static os_rbt_node_t * os_rbt_new_node(const os_rbt_t * rbt, void * data);
 // 左旋转
 static void os_rbt_left_rotate(os_rbt_t * rbt, os_rbt_node_t * node);
 // 右旋转
 static void os_rbt_right_rotate(os_rbt_t * rbt, os_rbt_node_t * node);
 
-os_rbt_t * os_rbt_create(os_rbt_compare cmp, os_rbt_malloc km, os_rbt_malloc vm, os_rbt_free kf, os_rbt_free vf)
+os_rbt_t * os_rbt_create(size_t elem_size, os_rbt_compare cmp)
 {
-	if (NULL == km || NULL == vm || NULL == kf || NULL == vf)
+	if (0u == elem_size || NULL == cmp)
 		return NULL;
 
 	os_rbt_t * rbt = (os_rbt_t *)calloc(1, sizeof(os_rbt_t));
 	if (NULL == rbt)
 		return NULL;
 
-	rbt->cmp = cmp;
-	rbt->key_malloc = km;
-	rbt->val_malloc = vm;
-	rbt->key_free = kf;
-	rbt->val_free = vf;
+	rbt->elem_size = elem_size;
+	rbt->node_size = sizeof(os_rbt_node_t) + elem_size;
+	rbt->cmp = cmp ? cmp : memcmp;
 
 	rbt->nil = (os_rbt_node_t *)calloc(1, sizeof(os_rbt_node_t));
 	if (NULL == rbt->nil) {
@@ -75,32 +70,26 @@ void os_rbt_destroy(os_rbt_t ** rbt)
 
 void os_rbt_clear(os_rbt_t * rbt)
 {
-
 }
 
-bool os_rbt_insert(os_rbt_t * rbt, void * key, void * val)
+bool os_rbt_insert(os_rbt_t * rbt, void * data)
 {
 	return true;
 }
 
-bool os_rbt_erase(os_rbt_t * rbt, const void * key)
+bool os_rbt_erase(os_rbt_t * rbt, const void * data)
 {
 	return true;
 }
 
-os_rbt_node_t * os_rbt_find(const os_rbt_t * rbt, const void * key)
+os_rbt_node_t * os_rbt_find(const os_rbt_t * rbt, const void * data)
 {
 	return NULL;
 }
 
-void * os_rbt_key(const os_rbt_node_t * node)
+void * os_rbt_data(const os_rbt_node_t * node)
 {
-	return node ? node->key : NULL;
-}
-
-void * os_rbt_val(const os_rbt_node_t * node)
-{
-	return node ? node->val : NULL;
+	return node ? (void *)node->data : NULL;
 }
 
 size_t os_rbt_size(const os_rbt_t * rbt)
@@ -113,14 +102,13 @@ bool os_rbt_empty(const os_rbt_t * rbt)
 	return rbt ? 0 == rbt->size : true;
 }
 
-os_rbt_node_t * os_rbt_new_node(const os_rbt_t * rbt, void * key, void * val)
+os_rbt_node_t * os_rbt_new_node(const os_rbt_t * rbt, void * data)
 {
-	os_rbt_node_t * node = (os_rbt_node_t *)malloc(sizeof(os_rbt_node_t));
+	os_rbt_node_t * node = (os_rbt_node_t *)malloc(rbt->node_size);
 	if (NULL == node)
 		return NULL;
 
-	node->key = rbt->key_malloc(key);
-	node->val = rbt->val_malloc(val);
+	memcpy(node->data, data, rbt->elem_size);
 	node->color = OS_RBT_COLOR_RED;
 	node->parent = rbt->nil;
 	node->left = rbt->nil;

@@ -1,5 +1,5 @@
-﻿#ifndef _LIBOS_H_
-#define _LIBOS_H_
+﻿#ifndef __LIBOS_H__
+#define __LIBOS_H__
 
 #include <stdio.h>
 #include <stdbool.h>
@@ -21,18 +21,5 @@
 #else
 #define OS_API
 #endif
-
-#define OS_ERR_MAX_LEN 260  // 错误信息最大长度
-
-OS_API_BEGIN
-
-/*
-* os_last_error
-* @brief 获取最后一次错误信息
-* @return 错误信息
-*/
-OS_API const char * os_last_error();
-
-OS_API_END
 
 #endif

@@ -32,6 +32,8 @@ static os_rbt_node_t * os_rbt_new_node(const os_rbt_t * rbt, void * data);
 static void os_rbt_left_rotate(os_rbt_t * rbt, os_rbt_node_t * node);
 // 右旋转
 static void os_rbt_right_rotate(os_rbt_t * rbt, os_rbt_node_t * node);
+// 插入后修复
+static void os_rbt_insert_fixup(os_rbt_t * rbt, os_rbt_node_t * node);
 
 os_rbt_t * os_rbt_create(size_t elem_size, os_rbt_compare cmp)
 {
@@ -74,6 +76,39 @@ void os_rbt_clear(os_rbt_t * rbt)
 
 bool os_rbt_insert(os_rbt_t * rbt, void * data)
 {
+	if (NULL == rbt || NULL == data)
+		return false;
+
+	os_rbt_node_t * tmp = rbt->nil;
+	os_rbt_node_t * root = rbt->root;
+	while (rbt->nil != root) {
+		tmp = root;
+		int ret = rbt->cmp(root->data, data, rbt->elem_size);
+		if (ret < 0)
+			root = root->right;
+		else if (ret > 0)
+			root = root->left;
+		else
+			return true;
+	}
+
+	os_rbt_node_t * node = os_rbt_new_node(rbt, data);
+	if (NULL == node)
+		return false;
+
+	node->parent = tmp;
+	int ret = rbt->cmp(tmp->data, data, rbt->elem_size);
+	if (rbt->nil == tmp)
+		rbt->root = node;
+	else if (ret < 0)
+		tmp->right = node;
+	else
+		tmp->left = node;
+
+	os_rbt_insert_fixup(rbt, node);
+
+	++rbt->size;
+
 	return true;
 }
 
@@ -171,4 +206,8 @@ void os_rbt_right_rotate(os_rbt_t * rbt, os_rbt_node_t * node)
 
 	left->right = node;
 	node->parent = left;
+}
+
+void os_rbt_insert_fixup(os_rbt_t * rbt, os_rbt_node_t * node)
+{
 }

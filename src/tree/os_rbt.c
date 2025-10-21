@@ -84,6 +84,20 @@ bool os_rbt_erase(os_rbt_t * rbt, const void * data)
 
 os_rbt_node_t * os_rbt_find(const os_rbt_t * rbt, const void * data)
 {
+	if (NULL == rbt || NULL == data)
+		return NULL;
+
+	os_rbt_node_t * node = rbt->root;
+	while (rbt->nil != node) {
+		int ret = rbt->cmp(node->data, data, rbt->elem_size);
+		if (ret < 0)
+			node = node->right;
+		else if (ret > 0)
+			node = node->left;
+		else
+			return node;
+	}
+
 	return NULL;
 }
 

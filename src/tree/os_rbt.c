@@ -51,13 +51,13 @@ os_rbt_t * os_rbt_create(os_rbt_compare cmp, os_rbt_malloc km, os_rbt_malloc vm,
 	rbt->key_free = kf;
 	rbt->val_free = vf;
 
-	rbt->nil = (os_rbt_t *)calloc(1, sizeof(os_rbt_node_t));
+	rbt->nil = (os_rbt_node_t *)calloc(1, sizeof(os_rbt_node_t));
 	if (NULL == rbt->nil) {
 		free(rbt);
 		return NULL;
 	}
 
-	rbt->nil = OS_RBT_COLOR_BLACK;
+	rbt->nil->color = OS_RBT_COLOR_BLACK;
 	rbt->root = rbt->nil;
 
 	return rbt;

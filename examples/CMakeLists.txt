@@ -27,8 +27,15 @@ set(DEQUE_EXAMPLES_SRC "os_deque_test.c")
 add_executable(os_deque_test ${DEQUE_EXAMPLES_SRC})
 target_link_libraries(os_deque_test libos_queue)
 
+# 红黑树
+set(RBT_EXAMPLES_SRC "os_rbt_test.c")
+add_executable(os_rbt_test ${RBT_EXAMPLES_SRC})
+target_link_libraries(os_rbt_test libos_tree)
+
+
 # 定义安装路径
 install(TARGETS os_slist_test DESTINATION bin)
 install(TARGETS os_dlist_test DESTINATION bin)
 install(TARGETS os_queue_test DESTINATION bin)
 install(TARGETS os_deque_test DESTINATION bin)
+install(TARGETS os_rbt_test DESTINATION bin)

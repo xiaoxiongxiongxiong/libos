@@ -37,7 +37,7 @@ static void os_rbt_insert_fixup(os_rbt_t * rbt, os_rbt_node_t * node);
 
 os_rbt_t * os_rbt_create(size_t elem_size, os_rbt_compare cmp)
 {
-	if (0u == elem_size || NULL == cmp)
+	if (0u == elem_size)
 		return NULL;
 
 	os_rbt_t * rbt = (os_rbt_t *)calloc(1, sizeof(os_rbt_t));
@@ -96,18 +96,20 @@ bool os_rbt_insert(os_rbt_t * rbt, void * data)
 	if (NULL == node)
 		return false;
 
+    ++rbt->size;
 	node->parent = tmp;
-	int ret = rbt->cmp(tmp->data, data, rbt->elem_size);
-	if (rbt->nil == tmp)
+	if (rbt->nil == tmp) {
 		rbt->root = node;
-	else if (ret < 0)
+		rbt->root->color = OS_RBT_COLOR_BLACK;
+		return true;
+	}
+
+	if (rbt->cmp(tmp->data, data, rbt->elem_size) < 0)
 		tmp->right = node;
 	else
 		tmp->left = node;
 
 	os_rbt_insert_fixup(rbt, node);
-
-	++rbt->size;
 
 	return true;
 }
@@ -196,13 +198,13 @@ void os_rbt_right_rotate(os_rbt_t * rbt, os_rbt_node_t * node)
 		left->right->parent = node;
 
 	left->parent = node->parent;
-	// 无父节点
-	if (node->parent == rbt->nil)
+
+    if (node->parent == rbt->nil) 	// 无父节点
 		rbt->root = left;
-	else if (node == node->parent->left)
+	else if (node == node->parent->left)  // 父节点左孩子
 		node->parent->left = left;
 	else
-		node->parent->right = left;
+		node->parent->right = left;  // 父节点右孩子
 
 	left->right = node;
 	node->parent = left;
@@ -210,4 +212,45 @@ void os_rbt_right_rotate(os_rbt_t * rbt, os_rbt_node_t * node)
 
 void os_rbt_insert_fixup(os_rbt_t * rbt, os_rbt_node_t * node)
 {
+	while (OS_RBT_COLOR_RED == node->parent->color) {
+		os_rbt_node_t * tmp = node->parent->parent;
+		if (node->parent == tmp->left) {
+			os_rbt_node_t * uncle = tmp->right;
+			if (OS_RBT_COLOR_RED == uncle->color) { // 叔叔节点红色
+				tmp->color = OS_RBT_COLOR_RED;
+				node->parent->color = OS_RBT_COLOR_BLACK;
+				uncle->color = OS_RBT_COLOR_BLACK;
+				node = tmp;
+			} else {
+				// 叔叔是黑色，且为右孩子 LR型
+				if (node == node->parent->right) {
+					node = node->parent;
+					os_rbt_left_rotate(rbt, node);
+				}
+				// 叔叔是黑色，且为左孩子
+                os_rbt_right_rotate(rbt, tmp);
+                node->parent->color = OS_RBT_COLOR_BLACK;
+                tmp->color = OS_RBT_COLOR_RED;
+			}
+		} else {
+			os_rbt_node_t * uncle = tmp->left;
+			if (OS_RBT_COLOR_RED == uncle->color) {
+				tmp->color = OS_RBT_COLOR_RED;
+				node->parent->color = OS_RBT_COLOR_BLACK;
+				uncle->color = OS_RBT_COLOR_BLACK;
+				node = tmp;
+			} else {
+				// 叔叔是黑色,且为左孩子 RL型
+				if (node == node->parent->left) {
+					node = node->parent;
+					os_rbt_right_rotate(rbt, node);
+				}
+				// 叔叔是黑色，且为右孩子
+				os_rbt_left_rotate(rbt, tmp);
+				node->parent->color = OS_RBT_COLOR_BLACK;
+				tmp->color = OS_RBT_COLOR_RED;
+			}
+		}
+    }
+	rbt->root->color = OS_RBT_COLOR_BLACK;
 }

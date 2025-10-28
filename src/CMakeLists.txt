@@ -25,7 +25,9 @@ set (OS_TREE_LIB_SRC ${OS_TREE_SRC})
 add_library(libos_tree SHARED ${OS_TREE_LIB_SRC})
 
 # install
-INSTALL (FILES ..include/*.h DESTINATION include)
+file (GLOB OS_HEADERS ../include/*.h)
+set (OS_HEADER_FILES ${OS_HEADERS})
+INSTALL (FILES ${OS_HEADER_FILES} DESTINATION include)
 
 install(TARGETS libos_list
         ARCHIVE DESTINATION lib

@@ -18,6 +18,13 @@ OS_API_BEGIN
 typedef int(*os_rbt_compare)(const void * data1, const void * data2, size_t size);
 
 /*
+* @brief  遍历回调函数
+* @param  user_data  用户数据
+* @param  data       存储的数据
+*/
+typedef void(*os_rbt_traversal_cb)(void * user_data, void * data);
+
+/*
 * os_rbt_create
 * @brief  创建红黑树
 * @param  elem_size  元素类型大小
@@ -90,6 +97,33 @@ OS_API size_t os_rbt_size(const os_rbt_t * rbt);
 * @return true/false
 */
 OS_API bool os_rbt_empty(const os_rbt_t * rbt);
+
+/*
+* os_rbt_preorder_traversel
+* @brief  先序遍历
+* @param  rbt  树实例
+* @param  cb   回调函数
+* @param  user_data 用户数据
+*/
+OS_API void os_rbt_preorder_traversel(const os_rbt_t * rbt, os_rbt_traversal_cb cb, void * user_data);
+
+/*
+* os_rbt_inorder_traversel
+* @brief  中序遍历
+* @param  rbt  树实例
+* @param  cb   回调函数
+* @param  user_data 用户数据
+*/
+OS_API void os_rbt_inorder_traversel(const os_rbt_t * rbt, os_rbt_traversal_cb cb, void * user_data);
+
+/*
+* os_rbt_postorder_traversel
+* @brief  后序遍历
+* @param  rbt  树实例
+* @param  cb   回调函数
+* @param  user_data 用户数据
+*/
+OS_API void os_rbt_postorder_traversel(const os_rbt_t * rbt, os_rbt_traversal_cb cb, void * user_data);
 
 OS_API_END
 

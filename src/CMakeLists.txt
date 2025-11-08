@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+ï»¿cmake_minimum_required(VERSION 3.8)
 message("CMake version: " ${CMAKE_VERSION})
 
 if(CMAKE_HOST_WIN32)
@@ -6,20 +6,20 @@ if(CMAKE_HOST_WIN32)
     add_compile_definitions(OS_API_EXPORT=1)
 endif()
 
-# °üº¬Â·¾¶
+# åŒ…å«è·¯å¾„
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
-# Á´±í
+# é“¾è¡¨
 file (GLOB OS_LIST_SRC list/*.c)
 set (OS_LIST_LIB_SRC ${OS_LIST_SRC})
 add_library(libos_list SHARED ${OS_LIST_LIB_SRC})
 
-# ¶ÓÁĞ
+# é˜Ÿåˆ—
 file (GLOB OS_QUEUE_SRC queue/*.c)
 set (OS_QUEUE_LIB_SRC ${OS_QUEUE_SRC})
 add_library(libos_queue SHARED ${OS_QUEUE_LIB_SRC})
 
-# Ê÷
+# çº¢é»‘æ ‘
 file (GLOB OS_TREE_SRC tree/*.c)
 set (OS_TREE_LIB_SRC ${OS_TREE_SRC})
 add_library(libos_tree SHARED ${OS_TREE_LIB_SRC})
